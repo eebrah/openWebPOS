@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test : inheritance</title>
+		<link type="text/css"
+		      rel="stylesheet"
+		      href="styling/main.css.php">
+	</head>
+	<body onload="init();">
+		<div class="wrapper">
+			<div class="header">
+			</div>
+			<div class="body">
+				<div class="inputForm">
+					<form action=""
+					      method="">
+						<input type="text"
+						       name="product" />
+						<button type="submit">add</button>
+					</form>
+				</div>
+				<div class="tillWrapper">
+					<table id="till">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>name</th>
+								<th>quantity</th>
+								<th>price</th>
+								<th>total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="numeric">1</td>
+								<td class="name">Mumias Sugar 2KG</td>
+								<td class="numeric quantity">2</td>
+								<td class="numeric price">120.0</td>
+								<td class="numeric total"></td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="4"></th>
+								<th class="numeric total">0.0</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="receipt"></div>
+			</div>
+			<div class="footer">
+			</div>
+		</div>
+		<script type="text/javascript"
+		        src="main.js">
+		</script>
+		<script>
+
+
+function generateTillRow( index, name, price, quantity ) {
+
+	var row = document.createElement( "tr" );
+
+	var count = document.createElement( "td" );
+	count.setAttribute( "class", "numeric" );
+	count.innerHTML = index;
+	row.appendChild( count );
+
+	var nameCell = document.createElement( "td" );
+	nameCell.setAttribute( "class", "itemName" );
+	nameCell.innerHTML = name;
+	row.appendChild( nameCell );
+
+	var quantityCell = document.createElement( "td" );
+	quantityCell.setAttribute( "class", "numeric quantity" );
+	quantityCell.innerHTML = quantity;
+	row.appendChild( quantityCell );
+
+	var priceCell = document.createElement( "td" );
+	priceCell.setAttribute( "class", "numeric price" );
+	priceCell.innerHTML = price;
+	row.appendChild( priceCell );
+
+	var total = parseInt( quantity ) * parseFloat( price );
+
+	var totalCell = document.createElement( "td" );
+	totalCell.setAttribute( "class", "numeric" );
+	totalCell.innerHTML = total;
+	row.appendChild( totalCell );
+
+	return row;
+
+}
+
+
+function init() {
+	alert( "start" );
+
+	products = Array();
+
+/*
+
+	testProduct = new Product( "00000", "Daima Yorghut 500G Vanilla" );
+
+
+	alert( products[ 398 ].getUniqueID() + ' : ' + products[ 398 ].getName() );
+	alert( products[ 600 ].getUniqueID() + ' : ' + products[ 600 ].getName() );
+
+*/
+	till = document.getElementById( "till" );
+	tillBody = till.getElementsByTagName( "tbody" )[ 0 ];
+
+	tableRows = tillBody.getElementsByTagName( "tr" );
+
+	tillTotalCell = till.getElementsByTagName( "tfoot" )[ 0 ]
+						.getElementsByTagName( "tr" )[ 0 ]
+						.getElementsByClassName( "total" )[ 0 ];
+
+	tillTotal = 0.0;
+
+	for( var i = 0; i < tableRows.length; i++ ) {
+
+		cells = tableRows[ i ].getElementsByTagName( "td" );
+
+		//alert( cells[ 2 ].innerHTML + ' ' + cells[ 3 ].innerHTML );
+
+		cells[ 4 ].innerHTML = ( parseInt( cells[ 2 ].innerHTML ) * parseFloat( cells[ 3 ].innerHTML ) );
+
+		tillTotal += ( parseInt( cells[ 2 ].innerHTML ) * parseFloat( cells[ 3 ].innerHTML ) );
+
+	}
+
+	for( var i = 0; i < 200; i++ ) {
+
+		products[ i ] = new Product();
+
+		//alert( product.getUniqueID() );
+
+/*
+		products[ i ] = product;
+
+		var name = products[ i ].getName();
+		var price = products[ i ].getPrice();
+
+		tillBody.appendChild( generateTillRow( i + 2, products[ i ].getName(), products[ i ].getPrice(), Math.floor( Math.random() * ( 100 ) ) ) );
+*/
+	}
+
+//	row = generateTillRow( 2, "Sprite PET 500ML", 60.0, 2 );
+
+//	tillTotal += parseFloat( total.innerHTML );
+
+//	tillBody.appendChild( row );
+
+//	tillTotalCell.innerHTML = tillTotal;
+
+	alert( "end" );
+
+}
+
+		</script>
+	</body>
+</html>

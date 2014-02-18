@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>openWebPOS</title>
+		<link type="text/css"
+		      rel="stylesheet"
+		      href="styling/main.css.php">
+	</head>
+	<body onload="init();">
+		<div class="wrapper">
+			<div class="header">
+			</div>
+			<div class="body">
+				<div class="inputForm">
+					<form action=""
+					      method="">
+						<input type="text"
+						       name="product" />
+						<button type="submit">add</button>
+					</form>
+				</div>
+				<div class="tillWrapper">
+					<table id="till">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>name</th>
+								<th>quantity</th>
+								<th>price</th>
+								<th>total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="numeric">1</td>
+								<td class="name">Mumias Sugar 2KG</td>
+								<td class="numeric quantity">2</td>
+								<td class="numeric price">120.0</td>
+								<td class="numeric total"></td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="4"></th>
+								<th class="numeric total">0.0</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="receipt"></div>
+			</div>
+			<div class="footer">
+			</div>
+		</div>
+		<script type="text/javascript"
+		        src="main.js">
+		</script>
+		<script type="text/javascript"
+		        src="underscore.min.js"></script>
+		<script>
+function init() {
+	alert( "start" );
+
+	products = Array();
+
+	for( var i = 0; i < 1000; i++ ) {
+
+		products[ i ] = new Product( "00000", "", Math.floor( Math.random() * ( 10000 ) ) * 0.01 );
+
+	}
+
+/*
+
+	testProduct = new Product( "00000", "Daima Yorghut 500G Vanilla" );
+
+
+	alert( products[ 398 ].getUniqueID() + ' : ' + products[ 398 ].getName() );
+	alert( products[ 600 ].getUniqueID() + ' : ' + products[ 600 ].getName() );
+
+*/
+	till = document.getElementById( "till" );
+	tillBody = till.getElementsByTagName( "tbody" )[ 0 ];
+
+	tableRows = tillBody.getElementsByTagName( "tr" );
+
+	tillTotalCell = till.getElementsByTagName( "tfoot" )[ 0 ]
+						.getElementsByTagName( "tr" )[ 0 ]
+						.getElementsByClassName( "total" )[ 0 ];
+
+	tillTotal = 0.0;
+
+	for( var i = 0; i < tableRows.length; i++ ) {
+
+		cells = tableRows[ i ].getElementsByTagName( "td" );
+
+		//alert( cells[ 2 ].innerHTML + ' ' + cells[ 3 ].innerHTML );
+
+		cells[ 4 ].innerHTML = ( parseInt( cells[ 2 ].innerHTML ) * parseFloat( cells[ 3 ].innerHTML ) );
+
+		tillTotal += ( parseInt( cells[ 2 ].innerHTML ) * parseFloat( cells[ 3 ].innerHTML ) );
+
+	}
+
+	row = document.createElement( "tr" );
+
+	count = document.createElement( "td" );
+	count.setAttribute( "class", "numeric" );
+	count.innerHTML = "2";
+	row.appendChild( count );
+
+	itemName = document.createElement( "td" );
+	itemName.setAttribute( "class", "itemName" );
+	itemName.innerHTML = "PET Sprite 2L";
+	row.appendChild( itemName );
+
+	quantity = document.createElement( "td" );
+	quantity.setAttribute( "class", "numeric quantity" );
+	quantity.innerHTML = "1";
+	row.appendChild( quantity );
+
+	price = document.createElement( "td" );
+	price.setAttribute( "class", "numeric price" );
+	price.innerHTML = "162.0";
+	row.appendChild( price );
+
+	total = document.createElement( "td" );
+	total.setAttribute( "class", "numeric" );
+	total.innerHTML = parseInt( quantity.innerHTML ) * parseFloat( price.innerHTML );
+	row.appendChild( total );
+
+	tillTotal += parseFloat( total.innerHTML );
+
+	tillBody.appendChild( row );
+
+	tillTotalCell.innerHTML = tillTotal;
+
+	alert( "end" );
+
+}
+
+		</script>
+	</body>
+</html>
